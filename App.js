@@ -6,20 +6,19 @@ class App extends Component {
 
   render(){
     return(
-      // flex 1 diz que para o componete usar a maior area possivel
-      // flex 2 diz que ocupara 50 % e as outras duas 25%
+      //base para um app com header e footer
       <View style={{ flex:1, backgroundColor: '#222'}}>
         <View style={{
-          flex: 1,
-          backgroundColor: 'red'
+          height: 65,
+          backgroundColor: '#222'
         }}></View>
          <View style={{
           flex: 1,
-          backgroundColor: 'green'
+          backgroundColor: '#FFF'
         }}></View>
         <View style={{
-          flex: 2,
-          backgroundColor: 'yellow'
+          height: 65,
+          backgroundColor: '#222'
         }}></View>
       </View>
     );
