@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, FlatList } from 'react-native'
+import Pessoas from "./src/Pessoas"; // se meu arquivo for um index.js não preciso coloca-lo posso colocar só até a pasta
 
 
 class App extends Component {
@@ -29,48 +30,20 @@ class App extends Component {
         <FlatList 
           data={this.state.feed}
           keyExtractor={(item) => item.id}
-          renderItem={ ({item}) => <Pessoa dados={item}/> }
+          renderItem={ ({item}) => <Pessoas dados={item}/> }
           ></FlatList>
       </View>
     );
   }
 }
 
-class Pessoa extends Component {
-  render() {
-    return(
-      <View style={styles.areaPessoa}>
-        <Text style={styles.textoPessoa}>
-          Nome: {this.props.dados.nome}
-        </Text>
-        <Text style={styles.textoPessoa}>
-          Idade: {this.props.dados.idade}
-        </Text>
-        <Text style={styles.textoPessoa}>
-          e-mail: {this.props.dados.email}
-        </Text>
-      </View>
-    )
-  };
-}
+
 
 const styles = StyleSheet.create({
   
   container: {
     flex: 1
-  },
-
-  areaPessoa: {
-    backgroundColor: "#222",
-    height: 200,
-    marginBottom: 15
-  },
-
-  textoPessoa: {
-    color: '#FFF',
-    fontSize: 20
   }
-
 });
 
 export default App;
