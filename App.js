@@ -3,6 +3,11 @@ import { View, Text, Image } from 'react-native'
 
 
 function App() {
+
+  let nome = 'Artur Todeschini Crestani';
+  let img = 'https://sujeitoprogramador.com/steve.png';
+
+
   return(
     <View>
       <Text>Ola Mundo</Text>
@@ -12,9 +17,10 @@ function App() {
 
       <Image 
          // obrigatorio source e style com width and height 
-        source={{ uri: 'https://sujeitoprogramador.com/steve.png'}}
+        source={{ uri: img }}
         style={{ width: 300, height: 300 }}
         />
+      <Text style={{ fontSize:  30}}>{nome}</Text>
     </View>
   )
 }
