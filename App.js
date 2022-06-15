@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, FlatList } from 'react-native'
-import Pessoas from "./src/Pessoas"; // se meu arquivo for um index.js não preciso coloca-lo posso colocar só até a pasta
-
+import { View, Text, StyleSheet } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
+// versoes antigas pode usar
+// https://www.npmjs.com/package/@react-native-community/picker
 
 class App extends Component {
 
@@ -9,29 +10,53 @@ class App extends Component {
     super(props);
 
     this.state = {
-      feed: [
-        {id: '1', nome: "Artur", idade: 45, email: "artodeschini@gmail.com"},
-        {id: '2', nome: "Emanuelle", idade: 7, email: "manu@gmail.com"},
-        {id: '3', nome: "Catia", idade: 40, email: "catia.silveira@gmail.com"},
-        {id: '4', nome: "Liria", idade: 40, email: "liria@gmail.com"},
-        {id: '5', nome: "Estevan", idade: 47, email: "estevan@gmail.com"},
-        {id: '6', nome: "Camila", idade: 40, email: "camila@gmail.com"},
-        {id: '7', nome: "Fred", idade: 2, email: "fredred@gmail.com"},
-        {id: '8', nome: "Leticia", idade: 45, email: "leticai@gmail.com"},
-        {id: '9', nome: "Otavio", idade: 47, email: "octavios@gmail.com"},
-        {id: '10', nome: "Heloisa", idade: 8, email: "helo@gmail.com"}
+      pizza: 0,
+      pizzas: [
+         { key: '1', nome: 'Calabresa', valor: 35.90, },
+         { key: '2', nome: '4 Queijos', valor: 39.90, },
+         { key: '3', nome: 'Vegetariana', valor: 40.20, },
+         { key: '4', nome: 'File 4 Queijos', valor: 29.90, },
+         { key: '5', nome: 'Calabresa', valor: 32.90, },
+         { key: '6', nome: 'Portuguesa', valor: 33.90, },
       ]
-    };
+    }
   }
 
   render(){
+ 
+    let pizzaItens = this.state.pizzas.map(
+      (v, k) => {
+        return <Picker.Item key={k} value={k} label={v.nome}></Picker.Item>
+      }
+    ); 
+
     return(
       <View style={styles.container}>
-        <FlatList 
-          data={this.state.feed}
-          keyExtractor={(item) => item.id}
-          renderItem={ ({item}) => <Pessoas dados={item}/> }
-          ></FlatList>
+        <Text style={styles.logo}>Menu Pizza</Text>
+
+        <Picker 
+          selectedValue={this.state.pizza}
+          onValueChange={ (itemValue, itemIndex) => 
+            this.setState({
+              pizza: itemIndex
+            })
+          }>
+          {/*
+            valores fixos seria assim 
+          <Picker.Item key={0} value={0} label={"Calabresa"}></Picker.Item>
+          <Picker.Item key={1} value={1} label={"4 Queijos"}></Picker.Item>
+          <Picker.Item key={2} value={2} label={"Vegetariana"}></Picker.Item>
+          <Picker.Item key={3} value={3} label={"Gorgonzola"}></Picker.Item>
+          <Picker.Item key={4} value={4} label={"File 4 Queijos"}></Picker.Item>
+          <Picker.Item key={5} value={5} label={"Portuguesa"}></Picker.Item> 
+          
+          */}
+          {pizzaItens}
+        </Picker>
+
+        <Text style={styles.pizzas}>Você escolheu Pizza {this.state.pizzas[this.state.pizza].nome}</Text>
+        <Text style={styles.pizzas}>R$ {this.state.pizzas[this.state.pizza].valor.toFixed(2)}</Text>
+        {/* <Text style={styles.pizzas}>{this.state.pizza}</Text> */}
       </View>
     );
   }
@@ -42,7 +67,20 @@ class App extends Component {
 const styles = StyleSheet.create({
   
   container: {
-    flex: 1
+    flex: 1,
+    marginTop: 20
+  }, 
+
+  logo: {
+    textAlign: 'center',
+    fontSize: 28,
+    fontWeight: "bold"
+  },
+
+  pizzas: {
+    marginTop: 15,
+    fontSize: 25,
+    textAlign: "center"
   }
 });
 
