@@ -1,50 +1,64 @@
 import React, { Component } from "react";
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet, TextInput } from 'react-native'
 
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      nome: ''
+    };
+
+    this.pegaNome = this.pegaNome.bind(this);
+  }
+
+  pegaNome(texto) {
+    
+      if (texto.length > 0) {
+          this.setState({
+            nome: 'Bem vindo: ' + texto
+        })
+      } else {
+        this.setState({
+          nome: ''
+        })
+      }   
+  }
+
   render(){
     return(
-      // comportamento padrao box um em baixo do outro ou flexDirection column
-      // utilziando row os compoentes ficarao um ao lado do outro
-      // usando justifyContent posso alinhar ao centro 
-      // ou flex-end a direita e flex-start a esquerda
-      // ou ainda space-between espacos iguais entre deles
-      // ou ainda space-around espacos iguais ao redores deles
-
-      // alignItems posso colocar no centro ou no comeco com flex-start ou no final com flex-end 
-
-      <View style={{ 
-        flex:1,
-        flexDirection: 'row', // row , column
-        justifyContent: 'center', // center, flex-start, flex-end
-        alignItems: 'center' // center, flex-start, flex-end
-        }}>
-        <View style={{
-          height: 50,
-          width: 50,
-          backgroundColor: 'red'
-        }}></View>
-         <View style={{
-          height: 50,
-          width: 50,
-          backgroundColor: 'green'
-        }}></View>
-        <View style={{
-          height: 50,
-          width: 50,
-          backgroundColor: 'yellow'
-        }}></View>
-         <View style={{
-          height: 50,
-          width: 50,
-          backgroundColor: 'blue'
-        }}></View>
+      <View style={styles.container}>
+        <TextInput 
+          style={styles.input} 
+          placeholder="Digite o seu nome"
+          onChangeText={this.pegaNome}>
+        </TextInput>
+        <Text style={styles.texto}>{this.state.nome}</Text>
       </View>
     );
   }
-
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, // ocupara a tela toda
+
+  },
+
+  input: {
+    height: 60,
+    borderWidth: 1,
+    borderColor: '#222',
+    margin: 10,
+    fontSize: 30
+  },
+
+  texto: {
+    textAlign: "center",
+    fontSize: 25
+  }
+});
 
 export default App;
