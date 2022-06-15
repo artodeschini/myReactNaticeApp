@@ -6,19 +6,27 @@ class App extends Component {
 
   render(){
     return(
-      //base para um app com header e footer
-      <View style={{ flex:1, backgroundColor: '#222'}}>
+      //comportamento padrao box um em baixo do outro
+      <View style={{ flex:1}}>
         <View style={{
-          height: 65,
-          backgroundColor: '#222'
+          height: 50,
+          width: 50,
+          backgroundColor: 'red'
         }}></View>
          <View style={{
-          flex: 1,
-          backgroundColor: '#FFF'
+          height: 50,
+          width: 50,
+          backgroundColor: 'green'
         }}></View>
         <View style={{
-          height: 65,
-          backgroundColor: '#222'
+          height: 50,
+          width: 50,
+          backgroundColor: 'yellow'
+        }}></View>
+         <View style={{
+          height: 50,
+          width: 50,
+          backgroundColor: 'blue'
         }}></View>
       </View>
     );
