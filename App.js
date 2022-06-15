@@ -1,43 +1,56 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TextInput, Button } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native'
 
 
 class App extends Component {
 
   constructor(props) {
     super(props);
-
+    
     this.state = {
-      nome: '',
-      input: ''
+      textoFrase: "Siga os bons e aprenda com eles.",
+      img: require('./src/biscoito.png')
     };
 
-    this.entrar = this.entrar.bind(this);
-  }
+    this.quebraBiscoito = this.quebraBiscoito.bind(this);
 
-  entrar() {
-    if (this.state.input === '') {
-      alert("Digite o seu nome!");
-      return;
-    }
+    this.frases = [
+      "Siga os bons e aprenda com eles.",
+      "O bom-senso vale mais do que muito conhecimento.",
+      "O riso é a menor distância entre duas pessoas.",
+      "Deixe de lado as preocupações e seja feliz.",
+      "Realize o óbvio, pense no improvável e conquiste o impossível.",
+      "Acredite em milagres, mas não dependa deles.",
+      "A maior barreira para o sucesso e o medo do fracasso."
+    ];
+  }
+  
+  quebraBiscoito() {
+    let aleatorio = Math.floor(Math.random() * this.frases.length);
+
     this.setState({
-      nome: 'Bem vindo: ' + this.state.input
-    });
+      textoFrase: '"' + this.frases[aleatorio] + '"',
+      img: require('./src/biscoitoAberto.png')
+    })
   }
 
   render(){
     return(
       <View style={styles.container}>
-        <TextInput 
-          style={styles.input} 
-          placeholder="Digite o seu nome"
-          underlineColorAndroid="transparent" // so funciona no android
-          onChangeText={ (texto) => this.setState({ input: texto})}>
-        </TextInput>
+        
 
-        <Button title="Entrar" onPress={this.entrar}></Button>
+        <Image 
+          source={this.state.img}
+          style={styles.img}>
+        </Image>
 
-        <Text style={styles.texto}>{this.state.nome}</Text>
+        <Text style={styles.textoFrase}>{this.state.textoFrase}</Text>
+
+        <TouchableOpacity style={styles.botao} onPress={this.quebraBiscoito}>
+          <View style={styles.btnArea}>
+            <Text style={styles.btnTexto}>Quebrar Biscoito</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -45,22 +58,50 @@ class App extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // ocupara a tela toda
+    flex: 1,
+    //paddingTop: 20,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+
+  img: {
+    width: 250,
+    height: 250,
 
   },
 
-  input: {
-    height: 60,
-    borderWidth: 1,
-    borderColor: '#222',
-    margin: 10,
-    fontSize: 30
+  textoFrase: {
+    fontSize: 20,
+    color: "#dd7b22",
+    margin: 30,
+    fontStyle: "italic",
+    textAlign: "center"
   },
 
-  texto: {
-    textAlign: "center",
-    fontSize: 25
+  // meu botao
+  botao: {
+    width: 230,
+    height: 50,
+    borderWidth: 2,
+    borderColor: "#dd7b22",
+    borderRadius: 25
+  },
+
+  // area interna do botao
+  btnArea: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
+  // texto do botao
+  btnTexto: {
+    fontSize: 18,
+    fontWeight: "bold", // negrito
+    color:  "#dd7b22",
   }
+
 });
 
 export default App;
