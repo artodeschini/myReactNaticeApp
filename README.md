@@ -45,4 +45,17 @@ npm start
 
 ## no terminal 2 start o emulador do android
 npx react-native run-android
-``` 
+```
+
+## help git ver alteracoes realizadas
+
+```bash
+git log --oneline --graph
+```
+
+## git checkout em uma tag especifica
+
+```bash
+# git checkout tags/<valor da tag>
+git checkout tags/1.0.0
+```
