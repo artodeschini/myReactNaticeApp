@@ -59,3 +59,17 @@ git log --oneline --graph
 # git checkout tags/<valor da tag>
 git checkout tags/1.0.0
 ```
+
+## dependencias adicionadas ao react-native
+
+- Picker (Combos)
+ 
+```bash
+npm install @react-native-picker/picker --save
+```
+
+- Slider (Barra de progressao)
+
+```bash
+npm install @react-native-community/slider --save
+```
