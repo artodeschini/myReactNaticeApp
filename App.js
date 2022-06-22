@@ -1,172 +1,117 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, StyleSheet, Switch, Button } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
-import Slider from "@react-native-community/slider";
+import { View, Image, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
+
+import Lista from "./src/lista";
 
 
 class App extends Component {
 
-  /*
-   * Nome TextInput
-   * Idade TextInput
-   * Sexo Picker
-   * Limite Slider
-   * Estudante Switch
-   * Botão (validacao) => mostrar num alert
-   */
-  constructor(props) {
+  constructor(props){
     super(props);
     this.state = {
-
-      valido: false,
-
-      nome: '',
-      nomeValido: false,
-      idade: '',
-      idadeValida: false,
-      sexo: 'Masculino',
-      estudante: false,
-      limite: 0
-    };
-
-    this.pegaNome = this.pegaNome.bind(this);
-    this.pegaIdade = this.pegaIdade.bind(this);
-    this.enviarDados = this.enviarDados.bind(this);
+      feed: [
+        // {
+        //   id: '1', 
+        //   nome: 'Lucas Silva', 
+        //   descricao: 'Mais um dia de muitos bugs :)', 
+        //   imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil1.png', 
+        //   imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto1.png',  
+        //   likeada: false, 
+        //   likers: 0
+        //  },
+        // {
+        //   id: '2', 
+        //   nome: 'Matheus', 
+        //   descricao: 'Isso sim é ser raiz!!!!!', 
+        //   imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil2.png', 
+        //   imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto2.png', 
+        //   likeada: false, 
+        //   likers: 0
+        // },
+        // {
+        //   id: '3', 
+        //   nome: 'Jose Augusto', 
+        //   descricao: 'Bora trabalhar Haha', 
+        //   imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil3.png', 
+        //   imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto3.png',  
+        //   likeada: false, 
+        //   likers: 3
+        // },
+        // {
+        //   id: '4', 
+        //   nome: 'Gustavo Henrique', 
+        //   descricao: 'Isso sim que é TI!', 
+        //   imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil1.png', 
+        //   imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto4.png', 
+        //   likeada: false, 
+        //   likers: 1
+        // },
+        // {
+        //   id: '5', 
+        //   nome: 'Guilherme', 
+        //   descricao: 'Boa tarde galera do insta...', 
+        //   imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil2.png', 
+        //   imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto5.png',
+        //   likeada: false, 
+        //   likers: 32
+        // }
+      ]
+     };
   }
 
-  pegaNome(texto) {
-    if (texto.length > 0) {
-        this.setState({
-          nome: texto,
-          nomeValido: true
-      })
-    } else {
-      this.setState({
-        nome: '',
-        nomeValido: false
-      })
-    }   
-  }
-
-  pegaIdade(texto) {
-    if (texto.length > 0) {
-      this.setState({
-        idade: texto,
-        idadeValida: true
-      })
-    } else {
-      this.setState({
-        idade: '',
-        idadeValida: false
-      })
-    }   
-  }
-
-  enviarDados() {
-    if (this.state.nomeValido && this.state.idadeValida && this.state.limite > 0 ) {
-      this.setState({ valido: true});
-    } else {
-      this.setState({ valido: false});
-      alert('Revise seus dados');
-    }
-  }
-
-  render(){
-    return(
+  render() {
+    return (
       <View style={styles.container}>
-        <Text style={styles.label}>Nome:</Text>
-        <TextInput
-          style={styles.input} 
-          placeholder="Digite o seu nome"
-          onChangeText={this.pegaNome}>
-        </TextInput>
+        <View style={styles.header}>
+          <TouchableOpacity>
+            <Image
+              source={require('./src/img/logo.png')}
+              style={styles.logo}>
+            </Image>
+          </TouchableOpacity>
 
-        <Text style={styles.label}>Idade:</Text>
-        <TextInput
-          style={styles.input}  
-          placeholder="Digite sua idade"
-          keyboardType='numeric'
-          onChangeText={this.pegaIdade}>
-        </TextInput>
+          <TouchableOpacity>
+            <Image
+              source={require('./src/img/send.png')}
+              style={styles.send}>
+            </Image>
+          </TouchableOpacity>
+        </View>
 
-        <Text style={styles.label}>Sexo:</Text>
-        <Picker 
-          selectedValue={this.state.sexo}
-          onValueChange={ (itemValue, itemIndex) => 
-            this.setState({
-              sexo: itemValue
-            })
-          }>
-          <Picker.Item key={'0'} value={"Masculino"} label={"Masculino"}></Picker.Item>
-          <Picker.Item key={'1'} value={"Feminino"} label={"Feminino"}></Picker.Item>
-         </Picker>
-
-        <Text style={styles.label}>Limite:</Text>
-        <Slider
-          minimumValue={0}
-          maximumValue={100}
-          onValueChange={(valorSelecionado) => this.setState({limite: valorSelecionado})}
-          value={this.state.valor}
-        /> 
-
-        <Text style={styles.label}>Estudante:</Text>
-        <Switch
-          value={this.state.estudante}
-          onValueChange={(valorSwitch) => this.setState({ estudante: valorSwitch})}
-        />
-
-        <Button 
-          title="Enviar" 
-          onPress={this.enviarDados}
-          style={styles.btn}>
-        </Button>
-
-        <Text style={styles.label}> 
-          { this.state.valido && this.state.nomeValido ? 'Nome informado: ' + this.state.nome : ''}
-        </Text>
-        <Text style={styles.label}> 
-          { this.state.valido && this.state.idadeValida ? 'Idade informado: ' + this.state.idade : ''}
-        </Text>
-        <Text style={styles.label}> 
-          {this.state.valido ? 'Sexo informado: ' + this.state.sexo : ''}
-        </Text>
-        <Text style={styles.label}> 
-          { this.state.valido && this.state.limite > 0 ? 'Limite informado: ' + this.state.limite.toFixed(2) : ''}
-        </Text>
-        <Text style={styles.label}> 
-          {this.state.valido ? (this.state.estudante ? 'Estudade: Sim' : 'Estudade: Não') : ''}
-        </Text>
+        {/* <FlatList
+          showsHorizontalScrollIndicator={false}
+          data={this.state.feed}
+          renderItem={({item}) => <Lista data={item}/>} >
+        </FlatList> */}
       </View>
     );
   }
 }
 
-
-
 const styles = StyleSheet.create({
-  
+
   container: {
     flex: 1,
     marginTop: 15
   },
 
-  label: {
-    fontSize: 20, 
-    margin: 10
+  header: {
+    heigt: 55,
+    blackgroundColor: '#FFF',
+    flexDirection: 'row',
+    alignItens: 'center',
+    justifyContent: 'space-between',
+    padding: 5,
+
+    borderBottomWidth: 0.2,
+    shadowColor: '#000',
+    elevation: 1
   },
 
-  input: {
-    height: 60,
-    borderWidth: 1,
-    borderColor: '#222',
-    margin: 10,
-    fontSize: 20
-  },
-
-  btn: {
-    marginTop: 15
+  send: {
+    width: 23,
+    height: 23
   }
-
 
 });
 
