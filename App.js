@@ -1,89 +1,64 @@
 import React, { Component } from "react";
-import { View, Image, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard} from 'react-native';
 
-import Lista from "./src/lista";
-
+import AsyncStorage from "@react-native-community/async-storage";
 
 class App extends Component {
 
   constructor(props){
     super(props);
     this.state = {
-      feed: [
-        {
-          id: '1', 
-          nome: 'Lucas Silva', 
-          descricao: 'Mais um dia de muitos bugs :)', 
-          imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil1.png', 
-          imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto1.png',  
-          likeada: false, 
-          likers: 0
-         },
-        {
-          id: '2', 
-          nome: 'Matheus', 
-          descricao: 'Isso sim é ser raiz!!!!!', 
-          imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil2.png', 
-          imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto2.png', 
-          likeada: false, 
-          likers: 0
-        },
-        {
-          id: '3', 
-          nome: 'Jose Augusto', 
-          descricao: 'Bora trabalhar Haha', 
-          imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil3.png', 
-          imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto3.png',  
-          likeada: false, 
-          likers: 3
-        },
-        {
-          id: '4', 
-          nome: 'Gustavo Henrique', 
-          descricao: 'Isso sim que é TI!', 
-          imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil1.png', 
-          imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto4.png', 
-          likeada: false, 
-          likers: 1
-        },
-        {
-          id: '5', 
-          nome: 'Guilherme', 
-          descricao: 'Boa tarde galera do insta...', 
-          imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil2.png', 
-          imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto5.png',
-          likeada: false, 
-          likers: 32
-        }
-      ]
+      input: '',
+      nome: ''
      };
+
+     this.gravaNome = this.gravaNome.bind(this);
+  }
+
+  // componentDidMount - quando o componente é montado em tela
+
+  async componentDidMount() {
+    await AsyncStorage.getItem('nome').then((value) => {
+      this.setState({
+        nome: value
+      })
+    })
+  }
+
+  // componentDidUpdate - quando o stage e atualizado faz algo 
+
+  async componentDidUpdate(_,prevState) {
+    const nome = this.state.nome;
+
+    if (prevState !== nome) {
+      await AsyncStorage.setItem('nome', nome); // ou direto this.state.nome
+    }
+  }
+
+  gravaNome() {
+    this.setState({
+      nome: this.state.input
+    });
+    alert('Salvo com sucesso');
+    Keyboard.dismiss(); // garante que o teclado vai fechar
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity>
-            <Image
-              source={require('./src/img/logo.png')}
-              style={styles.logo}>
-            </Image>
-          </TouchableOpacity>
+        <View style={styles.viewinput}>
+          <TextInput style={styles.input} value={this.state.input}
+            underlineColorAndroid="transparent"
+            onChangeText={(text) => this.setState({input: text})}>
 
-          <TouchableOpacity>
-            <Image
-              source={require('./src/img/send.png')}
-              style={styles.send}>
-            </Image>
+          </TextInput>
+          <TouchableOpacity onPress={this.gravaNome}>
+            <Text style={styles.botao}>+</Text>
           </TouchableOpacity>
         </View>
-
-        <FlatList
-          showsHorizontalScrollIndicator={false} // faz nao aparecer a barra de reolagem
-          keyExtractor={(item) => item.id }
-          data={this.state.feed} // dados da lista
-          renderItem={({item}) => <Lista data={item}/>}>
-        </FlatList>
+        <Text style={styles.nome}>
+          {this.state.nome}
+        </Text>
       </View>
     );
   }
@@ -93,25 +68,34 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    marginTop: 15
+    marginTop: 20,
+    alignItems: "center"
   },
 
-  header: {
-    heigt: 55,
-    blackgroundColor: '#FFF',
+  viewinput: {
     flexDirection: 'row',
-    alignItens: 'center',
-    justifyContent: 'space-between',
-    padding: 5,
-
-    borderBottomWidth: 0.2,
-    shadowColor: '#000',
-    elevation: 1
+    alignItems: 'center'
   },
 
-  send: {
-    width: 23,
-    height: 23
+  input: {
+    width: 350,
+    height: 40,
+    borderColor: '#000',
+    borderWidth: 1,
+    padding: 10
+  },
+
+  botao: {
+    backgroundColor: '#222',
+    color: 'white',
+    height: 40,
+    padding: 10,
+    marginLeft: 4
+  },
+
+  nome: {
+    fontSize: 30,
+    textAlign: "center"
   }
 
 });

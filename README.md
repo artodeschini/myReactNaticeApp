@@ -62,14 +62,28 @@ git checkout tags/1.0.0
 
 ## dependencias adicionadas ao react-native
 
-- Picker (Combos)
+### Picker (Combos)
  
 ```bash
 npm install @react-native-picker/picker --save
 ```
 
-- Slider (Barra de progressao)
+### Slider (Barra de progressao)
 
 ```bash
 npm install @react-native-community/slider --save
+```
+
+### async-storage (posibilita salvar dados no celular)
+
+<!-- erro
+npm ERR! Could not resolve dependency:
+npm ERR! peer react@"^16.8" from @react-native-community/async-storage@1.12.1
+npm ERR! node_modules/@react-native-community/async-storage
+npm ERR!   @react-native-community/async-storage@"*" from the root projec 
+-->
+
+```bash
+# para resolver o problema 
+npm install @react-native-community/async-storage --legacy-peer-deps --save
 ```
